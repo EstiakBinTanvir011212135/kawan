@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { TUser } from './user.interface';
+import { calculateHight } from '../utils/calculetHight';
 
 const UserSchema = new Schema<TUser>(
   {
@@ -54,24 +55,12 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
   const update = this.getUpdate();
 
   if (update && typeof update.hight === 'string') {
-    const hightValue = update.hight.trim(); // Clean up whitespace
-    let feet = 0;
-    let inches = 0;
-
-    if (hightValue.includes('.')) {
-      [feet, inches = 0] = hightValue
-        .split('.')
-        .map((val) => parseFloat(val.trim()) || 0);
-    } else {
-      feet = parseFloat(hightValue) || 0;
-    }
-
-    const m = feet * 0.3048 + inches * 0.0254; // Conversion logic in m
-    update.hight = `${m.toFixed(2)} `; // Update the height in m
-
+    let updateHight = await calculateHight(update.hight);
+    update.hight = updateHight;
     this.setUpdate(update); // Apply the updated value
   }
 
   next();
 });
+
 export const User = model<TUser>('user', UserSchema);
