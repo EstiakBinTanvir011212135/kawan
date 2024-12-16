@@ -2,6 +2,7 @@ import { model, Schema } from 'mongoose';
 import { THealth } from './healthAndNutrition.interface';
 import { User } from '../user/user.model';
 import { calculateBMI } from '../utils/calculetBMI';
+import { calculateHight } from '../utils/calculetHight';
 
 const healthySchema = new Schema<THealth>(
   {
@@ -49,10 +50,6 @@ healthySchema.pre('save', async function (next) {
     if (!user || !user.hight || !user.weight) {
       throw new Error('User height or weight is missing');
     }
-    // const bmi = user.weight / (user.hight * 2); // number
-    // const BMICalculation = bmi.toFixed(2);
-    // const BMI = BMICalculation.toString(); //convert in string
-    // calculateBMI(user?.hight, user?.weight);
 
     this.BMI = calculateBMI(user?.hight, user?.weight);
     this.hight = user?.hight;
@@ -65,6 +62,20 @@ healthySchema.pre('save', async function (next) {
   }
 });
 
-// we need the data when use is update
+// when user update the data this time calculate the Hight and the BMI
+healthySchema.pre('findOneAndUpdate', async function (next) {
+  const update = this.getUpdate();
+
+  if (update) {
+    const updateHight = await calculateHight(update.hight);
+    const updateBMI = calculateBMI(updateHight, update.weight);
+
+    update.hight = updateHight;
+    update.BMI = updateBMI;
+
+    this.setUpdate(update);
+  }
+  next();
+});
 
 export const Health = model<THealth>('healths', healthySchema);

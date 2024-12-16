@@ -50,7 +50,6 @@ const updateUserIntoDB = async (id: string, payload: Partial<TUser>) => {
         await health.save(); // Save changes
       }
     } catch (error) {
-      console.error('Error updating health records:', error.message);
       throw new Error('Failed to update associated health records.');
     }
   }

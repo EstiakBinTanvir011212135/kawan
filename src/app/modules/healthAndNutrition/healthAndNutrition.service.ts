@@ -15,21 +15,11 @@ const getAllHealthFromDB = async () => {
 };
 
 const getSingleHealthFormDB = async (id: string) => {
-  /* 1st  find the user exists 
-  2nd 
-  
-  */
-
   const result = await Health.findById(id);
   return result;
 };
 
 const updateHealthIntoDB = async (id: string, payload: Partial<THealth>) => {
-  // here we have to pass the hight and the weight in the user
-  //  first find the heath id & the id of the user
-  // if the user update the user hight and the wight then
-  // update the BMI and the hight and the wight in the user collection
-  // add the hight and the wight value in the health collection
   if (payload.hight && typeof payload.hight !== 'string') {
     throw new Error('Hight must be a string.');
   }
@@ -44,7 +34,34 @@ const updateHealthIntoDB = async (id: string, payload: Partial<THealth>) => {
     new: true, // Return the updated user document
   });
 
-  console.log(updatedHealth);
+  // * clg of the user health
+  console.log('payload', payload);
+
+  if (!updatedHealth) {
+    throw new Error('health not updated');
+  }
+  //TODO : when this health will update the hight and weight data then also update in the User collection
+  // ! this function is not working
+  if (payload.hight || payload.weight) {
+    try {
+      const UserRecord = await User.find({ user: updatedHealth.user });
+      if (!UserRecord) {
+        console.log('user dose not exists');
+      }
+      for (const userInfo of UserRecord) {
+        const hight = updatedHealth.hight;
+        const weight = updatedHealth.weight;
+
+        userInfo.hight = hight;
+        userInfo.weight = weight;
+        console.log('userinfo', userInfo);
+        await userInfo.save();
+      }
+    } catch (error) {
+      throw new Error('Failed to update associated User records.');
+    }
+  }
+  console.log('updatedHealth', updatedHealth);
 
   return updatedHealth;
 };
