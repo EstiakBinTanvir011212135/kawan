@@ -1,9 +1,12 @@
-type THabit = {
+import { Types } from 'mongoose';
+
+export type THabit = {
   HabitName: string;
+  user: Types.ObjectId;
   Description: string;
   status: 'TODO' | 'InPROGRESS' | 'COMPLETE';
-  StartDate: string;
-  EndDate: string;
+  StartDate: Date;
+  EndDate?: Date;
   Progress: string;
   LastPerformed: string;
 };
