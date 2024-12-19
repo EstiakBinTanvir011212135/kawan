@@ -10,10 +10,12 @@ const moduleRoutes = [
     path: '/user',
     route: UserRouters,
   },
+
   {
     path: '/health',
     route: HealthRouters,
   },
+
   {
     path: '/habit',
     route: HabitRoutes,

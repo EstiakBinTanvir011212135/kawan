@@ -1,5 +1,13 @@
 import { model, Schema } from 'mongoose';
-import { THabit } from './habit.interface';
+import { TDailyPractice, THabit } from './habit.interface';
+
+const DailyPracticeSchema = new Schema<TDailyPractice>({
+  StartDate: {
+    type: Date,
+    required: [true, 'Add the time you start the habit '],
+  },
+  EndDate: { type: Date },
+});
 
 const HabitSchema = new Schema<THabit>(
   {
@@ -17,17 +25,7 @@ const HabitSchema = new Schema<THabit>(
       type: String,
       required: [true, 'Description is required'],
     },
-    status: {
-      type: String,
-      enum: ['TODO', 'InPROGRESS', 'COMPLETE'],
-      default: 'TODO',
-    },
-    StartDate: {
-      type: Date,
-    },
-    EndDate: {
-      type: Date,
-    },
+    DailyPractice: [DailyPracticeSchema],
   },
   {
     timestamps: true,

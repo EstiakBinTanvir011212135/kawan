@@ -1,12 +1,15 @@
 import { Types } from 'mongoose';
 
+export type TDailyPractice = {
+  StartDate: Date;
+  EndDate?: Date;
+};
+
 export type THabit = {
   HabitName: string;
   user: Types.ObjectId;
   Description: string;
-  status: 'TODO' | 'InPROGRESS' | 'COMPLETE';
-  StartDate: Date;
-  EndDate?: Date;
-  Progress: string;
-  LastPerformed: string;
+  DailyPractice: TDailyPractice[];
+  Progress?: string;
+  LastPerformed?: string;
 };
