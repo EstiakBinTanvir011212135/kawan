@@ -45,6 +45,7 @@ const updateExistsHabitDate = catchAsync(async (req, res, next) => {
     habitId,
     req.body,
   );
+  return result;
 });
 export const HabitController = {
   CreteHabit,

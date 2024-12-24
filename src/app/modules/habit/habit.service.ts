@@ -3,7 +3,6 @@ import { THabit } from './habit.interface';
 import { Habit } from './habit.model';
 
 const createHabitIntoDB = async (payload: THabit) => {
-  //TODO: check the user is exists or  not
   const result = await Habit.create(payload);
 
   return result;
