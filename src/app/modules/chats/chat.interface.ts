@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 export type TChat = {
-  FromEmail: Types.ObjectId;
+  FromEmail: string;
 
   ToEmail: string;
 
