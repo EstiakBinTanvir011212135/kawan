@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UserRouters } from '../modules/user/user.route';
 import { HealthRouters } from '../modules/healthAndNutrition/healthAndNutrition.route';
 import { HabitRoutes } from '../modules/habit/habit.route';
+import { ChatRoutes } from '../modules/chats/chat.route';
 
 const router = Router();
 
@@ -19,6 +20,11 @@ const moduleRoutes = [
   {
     path: '/habit',
     route: HabitRoutes,
+  },
+
+  {
+    path: '/chat',
+    route: ChatRoutes,
   },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

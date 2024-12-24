@@ -9,8 +9,8 @@ app.use(cors());
 
 app.use('/api/v1', router);
 
-app.get('/', (req: Request, res: Response) => {
-  const a = 7;
-  res.send('this is running');
-});
+// app.get('/', (req: Request, res: Response) => {
+//   const a = 7;
+//   res.send('this is running');
+// });
 export default app;
