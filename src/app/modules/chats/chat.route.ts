@@ -5,12 +5,8 @@ const route = express.Router();
 
 route.post('/create-chat', ChatController.createChat);
 
-// route.get('/', ChatController);
+route.get('/', ChatController.getAllChat);
 
-// route.get('/:id', ChatController);
-
-// route.patch('/:id', ChatController);
-
-// route.put('/:id/:habitId', ChatController);
+route.patch('/:id', ChatController.deleteChat);
 
 export const ChatRoutes = route;

@@ -10,6 +10,7 @@ const createChatIntoDB = async (payload: TChat) => {
   if (!formEmailExists) {
     throw new Error('this email dose not exists');
   }
+
   const toEmailExists = await User.findOne({ email: payload.ToEmail });
   if (!toEmailExists) {
     throw new Error('this email dose not exists');
@@ -20,12 +21,18 @@ const createChatIntoDB = async (payload: TChat) => {
 };
 
 const getAllChatFromDB = async () => {
-  const result = await Chat.create();
+  // don't show those chat which is deleted
+  const result = await Chat.find();
   return result;
 };
 
-const deleteChatFormDB = async () => {
-  const result = await Chat.create();
+const deleteChatFormDB = async (id: string) => {
+  const result = await Chat.findByIdAndUpdate(
+    id,
+    { IsDelete: true },
+    { new: true },
+  );
+  console.log(result);
   return result;
 };
 

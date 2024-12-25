@@ -11,7 +11,7 @@ const createChat = catchAsync(async (req, res) => {
 });
 
 const getAllChat = catchAsync(async (req, res) => {
-  const result = await ChatService.createChatIntoDB(req.body);
+  const result = await ChatService.getAllChatFromDB();
   res.status(200).json({
     success: true,
     message: 'message send successfully',
@@ -20,7 +20,8 @@ const getAllChat = catchAsync(async (req, res) => {
 });
 
 const deleteChat = catchAsync(async (req, res) => {
-  const result = await ChatService.createChatIntoDB(req.body);
+  const { id } = req.params;
+  const result = await ChatService.deleteChatFormDB(id);
   res.status(200).json({
     success: true,
     message: 'message send successfully',
