@@ -2,20 +2,21 @@ import { model, Schema } from 'mongoose';
 import { TUser } from './user.interface';
 import { calculateHight } from '../utils/calculetHight';
 
+//  this work like validation
 const UserSchema = new Schema<TUser>(
   {
     email: {
       type: String,
-      required: true,
+      required: [true, 'Email is required'],
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: [true, 'Password is required'],
     },
     name: {
       type: String,
-      required: true,
+      required: [true, 'Name is required'],
     },
     photo: {
       type: String,
@@ -24,7 +25,8 @@ const UserSchema = new Schema<TUser>(
       type: String,
       enum: {
         values: ['male', 'female', 'other'],
-        message: '{VALUE} is not valid',
+        message:
+          "{VALUE} is not valid user this one of them 'male', 'female', 'other'",
       },
     },
     bloodGroup: {
@@ -63,4 +65,5 @@ UserSchema.pre('findOneAndUpdate', async function (next) {
   next();
 });
 
+// * here define the table name 'user'
 export const User = model<TUser>('user', UserSchema);

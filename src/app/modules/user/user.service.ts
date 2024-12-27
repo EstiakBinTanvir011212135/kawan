@@ -12,6 +12,7 @@ const getAllUserFromDB = async () => {
   return result;
 };
 
+// TODO return here next
 const updateUserIntoDB = async (id: string, payload: Partial<TUser>) => {
   if (payload.hight && typeof payload.hight !== 'string') {
     throw new Error('Hight must be a string.');

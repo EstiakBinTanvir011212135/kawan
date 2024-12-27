@@ -19,12 +19,14 @@ const getSingleHabitFromDB = async (payload: THabit) => {
 };
 
 const updateHabitIntoDB = async (id: string, payload: Partial<THabit>) => {
+  // ... is spread oparetr
   const { DailyPractice, ...remainingHabitData } = payload;
   const session = await mongoose.startSession();
+
   try {
     session.startTransaction();
 
-    //* session-1
+    //* session-1 updating remainingHabitData
     const UpdateHabitData = await Habit.findByIdAndUpdate(
       id,
       remainingHabitData,
@@ -40,6 +42,7 @@ const updateHabitIntoDB = async (id: string, payload: Partial<THabit>) => {
     }
 
     //  here the new start Date on the specific habit
+    //* session -2 Update the data
     if (DailyPractice && Array.isArray(DailyPractice)) {
       for (const practice of DailyPractice) {
         await Habit.updateOne(
@@ -68,13 +71,14 @@ const updateHabitIntoDB = async (id: string, payload: Partial<THabit>) => {
   }
 };
 
+// add the today's end data of habit
 const updateExistsHabitDateIntoDB = async (
-  id: string,
-  habitId: string,
+  id: string, // id of the created habit
+  habitId: string, // id of the created habit's today wark id
   payload: Partial<THabit>,
 ) => {
   const { DailyPractice } = payload;
-  const habitExists = await Habit.findById(id);
+  const habitExists = await Habit.findById(id); // check the habit exists in the database
 
   if (!habitExists) {
     throw new Error(' This is not a valid id ');
@@ -82,20 +86,21 @@ const updateExistsHabitDateIntoDB = async (
   if (DailyPractice && Array.isArray(DailyPractice)) {
     for (const practice of DailyPractice) {
       await Habit.updateOne(
-        { _id: id },
         {
-          $push: {
-            DailyPractice: {
-              EndDate: practice.EndDate,
-            },
+          _id: id,
+          'DailyPractice._id': habitId, // Match the specific DailyPractice entry
+        },
+        {
+          $set: {
+            'DailyPractice.$.EndDate': practice.EndDate, // Update the EndDate field
           },
         },
       );
     }
   }
-
-  console.log(id);
-  console.log(habitId);
+  const updatedHabit = await Habit.findById(id);
+  console.log(updatedHabit);
+  return updatedHabit;
 };
 
 export const HabitService = {

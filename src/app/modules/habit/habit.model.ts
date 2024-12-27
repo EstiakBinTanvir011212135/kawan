@@ -7,6 +7,8 @@ const DailyPracticeSchema = new Schema<TDailyPractice>({
     required: [true, 'Add the time you start the habit '],
   },
   EndDate: { type: Date },
+
+  workTime: { type: String },
 });
 
 const HabitSchema = new Schema<THabit>(
@@ -18,7 +20,6 @@ const HabitSchema = new Schema<THabit>(
     user: {
       type: Schema.Types.ObjectId,
       required: [true, 'User id is required'],
-      unique: true,
       ref: 'user',
     },
     Description: {

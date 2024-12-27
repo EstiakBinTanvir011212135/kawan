@@ -3,6 +3,8 @@ import { UserRouters } from '../modules/user/user.route';
 import { HealthRouters } from '../modules/healthAndNutrition/healthAndNutrition.route';
 import { HabitRoutes } from '../modules/habit/habit.route';
 import { ChatRoutes } from '../modules/chats/chat.route';
+import path from 'path';
+import { EBookRouters } from '../modules/EBook/EBook.route';
 
 const router = Router();
 

@@ -41,7 +41,7 @@ const updateHealthIntoDB = async (id: string, payload: Partial<THealth>) => {
     throw new Error('health not updated');
   }
   //TODO : when this health will update the hight and weight data then also update in the User collection
-  // ! this function is not working
+  //! this function is not working
   if (payload.hight || payload.weight) {
     try {
       const UserRecord = await User.find({ user: updatedHealth.user });

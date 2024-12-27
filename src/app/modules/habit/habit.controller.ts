@@ -1,5 +1,6 @@
 import catchAsync from '../../utils/catchAcync';
 import { HabitService } from './habit.service';
+//pc a habit max 2 hour
 
 const CreteHabit = catchAsync(async (req, res, next) => {
   const result = await HabitService.createHabitIntoDB(req.body);
@@ -28,6 +29,7 @@ const getSingleHabit = catchAsync(async (req, res, next) => {
   //   });
 });
 
+// add the new data to start the habit
 const updateHabit = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const result = await HabitService.updateHabitIntoDB(id, req.body);
@@ -37,6 +39,8 @@ const updateHabit = catchAsync(async (req, res, next) => {
     data: result,
   });
 });
+
+// add the end time of today habit
 const updateExistsHabitDate = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const { habitId } = req.params;
@@ -45,7 +49,11 @@ const updateExistsHabitDate = catchAsync(async (req, res, next) => {
     habitId,
     req.body,
   );
-  return result;
+  res.status(200).json({
+    success: true,
+    message: 'Habit end date is updated successfully',
+    data: result,
+  });
 });
 export const HabitController = {
   CreteHabit,

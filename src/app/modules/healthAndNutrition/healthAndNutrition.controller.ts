@@ -41,6 +41,7 @@ const getSingleHealth: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
 const updateHealth: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
