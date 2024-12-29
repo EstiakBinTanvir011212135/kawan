@@ -16,7 +16,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tensorflow/tfjs-node": "^4.22.0",
     "cors": "^2.8.5",
+    "csv-parser": "^3.1.0",
+    "decision-tree": "^0.3.7",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "mongoose": "^8.8.3",

@@ -1,10 +1,20 @@
 import { Types } from 'mongoose';
 
 export type TReadBooks = {
-  user: Types.ObjectId;
-  eBook: Types.ObjectId;
+  UserEmail: string; //user id must be needed
+  eBook: Types.ObjectId; //ebook id must be needed
   favorite: boolean;
-  rating: string;
   read_data: string;
-  review: string;
+
+  //* all those value come from the EBOOK
+
+  title?: string;
+  cover?: string;
+  author?: string;
+  rating?: number;
+  category?: string;
+  quickSummery?: string;
+  aboutAuthor?: string;
+  audio?: File;
+  book?: File;
 };

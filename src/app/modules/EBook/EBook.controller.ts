@@ -10,6 +10,16 @@ const createEbook = catchAsync(async (req, res) => {
   });
 });
 
+const getAllEbook = catchAsync(async (req, res) => {
+  const result = await EBookService.getAllEBookFromDB();
+  res.status(200).json({
+    success: true,
+    message: 'All Books get successfully',
+    data: result,
+  });
+});
+
 export const EBookController = {
   createEbook,
+  getAllEbook,
 };
